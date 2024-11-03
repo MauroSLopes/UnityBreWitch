@@ -6,6 +6,8 @@ public class SlimeEnemyBehavior : MonoBehaviour
 {
     Rigidbody2D enemyRigidBody;
     GameObject player;
+    Animator animator;
+    
 
     [SerializeField] float speed = 10f;
 
@@ -15,6 +17,7 @@ public class SlimeEnemyBehavior : MonoBehaviour
 
     void Start()
     {
+        animator = GetComponent<Animator>();
         player = GameObject.FindWithTag("Player");
         enemyRigidBody = GetComponent<Rigidbody2D>();
 
@@ -25,7 +28,8 @@ public class SlimeEnemyBehavior : MonoBehaviour
     {
         if (!inCooldown) {
             transform.Translate(nextPos.normalized * Time.deltaTime * speed);
-            }
+            animator.SetBool("Jump", true);
+        }
     }
 
     IEnumerator MoveEnemy()
@@ -35,6 +39,7 @@ public class SlimeEnemyBehavior : MonoBehaviour
             inCooldown = false;
             yield return new WaitForSeconds(0.25f);
             inCooldown = true;
+            animator.SetBool("Jump", false);
             yield return new WaitForSeconds(1f);
         }
     }

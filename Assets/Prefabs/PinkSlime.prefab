@@ -16,6 +16,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 1160356261127867848, guid: 1b3d5f880a1b9c542b41a0cab6895c04, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: e4590c25cc36c3f428dc5f96db0219c4, type: 2}
     - target: {fileID: 3626916397498700004, guid: 1b3d5f880a1b9c542b41a0cab6895c04, type: 3}
       propertyPath: m_SortingLayer
       value: 3
@@ -137,3 +141,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58de4c1443db3e048a2384885c8666b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 10
