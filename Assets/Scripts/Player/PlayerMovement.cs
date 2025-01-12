@@ -2,17 +2,20 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public static float playerSpeed = 5f;
+    private float playerSpeed;
 
     Rigidbody2D rb;
 
     HerbInventory inventory;
+
+    PlayerStatus status;
 
     bool isFacingRight = false;
     internal Vector3 direction;
 
     private void Start()
     {
+        status = GetComponent<PlayerStatus>();
         rb = GetComponent<Rigidbody2D>();
         inventory = GetComponent<HerbInventory>();
     }
@@ -20,6 +23,8 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        playerSpeed = status.playerMoveSpeed;
+
         direction.x = Input.GetAxisRaw("Horizontal");
         direction.y = Input.GetAxisRaw("Vertical");
 
@@ -78,8 +83,9 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
-        inventory.herbInventory[HerbInventory.herbCount] = (collision.GetComponent<HerbBehavior>().herbName);
-        HerbInventory.herbCount++;
+        HerbTypes herb = collision.GetComponent<HerbBehavior>().herbName;
+        inventory.AddHerb(herb);
+
         Destroy(collision.gameObject);
     }
 }

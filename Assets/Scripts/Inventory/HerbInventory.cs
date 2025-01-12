@@ -1,11 +1,16 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class HerbInventory : MonoBehaviour
 {
-    public HerbTypes[] herbInventory = new HerbTypes[2];
-    public static int herbCount = 0;
+    [SerializeField] private HerbTypes[] herbInventory = new HerbTypes[2];
+    private CraftingOrder crafting;
+    private int herbCount = 0;
+
+    private void Start()
+    {
+        crafting = GetComponent<CraftingOrder>();
+    }
 
     // Update is called once per frame
     void Update()
@@ -15,14 +20,15 @@ public class HerbInventory : MonoBehaviour
             return;
         }
 
-        CraftingOrder.FindPotion(herbInventory);
+        int currentPotion = crafting.FindPotion(herbInventory);
+        crafting.BrewPotion(currentPotion, gameObject);
+
         herbCount = 0;
     }
 
-    IEnumerator SpeedCountdown(float speedModifier)
+    public void AddHerb(HerbTypes herb)
     {
-        PlayerMovement.playerSpeed = speedModifier;
-        yield return new WaitForSeconds(5f);
-        PlayerMovement.playerSpeed = 5f;
+        herbInventory[herbCount] = herb;
+        herbCount++;
     }
 }
