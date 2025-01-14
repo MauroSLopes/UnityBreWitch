@@ -59,15 +59,14 @@ public class CraftingOrder : MonoBehaviour
                 break;
             case 1:
                 // Tiny player
-                // Change Prefab for X seconds.
+                StartCoroutine(potionManager.tinyPotionBehavior(new Vector2(0.6875f, 0.3786746f), 5f));
                 break;
             case 2:
                 // Slippery Ground
-                
                 break;
             case 3:
                 // Enemy Bonus MoveSpeed 
-                StartCoroutine(potionManager.TemporaryMovespeed(10f, 5f, 1));
+                StartCoroutine(potionManager.TemporaryMovespeed(10f, 5f, 1)); 
                 Debug.Log("Found it");
                 break;
             case 4:
@@ -104,6 +103,7 @@ public class CraftingOrder : MonoBehaviour
                 break;
             case 12:
                 // Kill All Enemys
+                potionManager.KillAllEnemys();
                 break;
             case 13:
                 // 

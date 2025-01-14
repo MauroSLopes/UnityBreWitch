@@ -20,15 +20,21 @@ public class HerbInventory : MonoBehaviour
             return;
         }
 
+        herbCount = 0;
+
         int currentPotion = crafting.FindPotion(herbInventory);
         crafting.BrewPotion(currentPotion, gameObject);
 
-        herbCount = 0;
     }
 
     public void AddHerb(HerbTypes herb)
     {
+        if (herbCount >= 2)
+        {
+            return;
+        }
+        
         herbInventory[herbCount] = herb;
-        herbCount++;
+        herbCount += 1;
     }
 }

@@ -49,6 +49,15 @@ public class PotionBehaviour
         }
     }
 
+    public Vector2 ChangePlayerHitBox(Vector2 hitboxSize)
+    {
+        Vector2 oldHitBoxSize = playerGameObject.GetComponent<BoxCollider2D>().size;
+        playerGameObject.GetComponent<BoxCollider2D>().size = hitboxSize;
+        playerGameObject.GetComponent<SpriteRenderer>().enabled = !playerGameObject.GetComponent<SpriteRenderer>().enabled;
+
+        return oldHitBoxSize;
+    }
+
     public IEnumerator TemporaryMovespeed(float BonusMovespeed, float duration, int type)
     {
         float defaultMoveSpeed;
@@ -75,4 +84,13 @@ public class PotionBehaviour
             ChangeEnemySpeed(defaultMoveSpeed);
         }
     }
+
+    public IEnumerator tinyPotionBehavior(Vector2 hitboxSize, float duration)
+    {
+        Vector2 oldHitBoxSize = ChangePlayerHitBox(hitboxSize);
+
+        yield return new WaitForSeconds(duration);
+
+        ChangePlayerHitBox(oldHitBoxSize);
+    } 
 }

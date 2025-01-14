@@ -1,3 +1,5 @@
+using System.Collections;
+using Unity.Burst.CompilerServices;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -74,8 +76,6 @@ public class PlayerMovement : MonoBehaviour
         isFacingRight = !isFacingRight;
     }
 
-
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Enemy"))
@@ -85,7 +85,7 @@ public class PlayerMovement : MonoBehaviour
 
         HerbTypes herb = collision.GetComponent<HerbBehavior>().herbName;
         inventory.AddHerb(herb);
-
         Destroy(collision.gameObject);
     }
+
 }
