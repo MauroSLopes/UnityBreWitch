@@ -18,7 +18,7 @@ public class EnemySpawner : MonoBehaviour
     {
         while (true)
         {
-            float interval = Random.Range(1f, 3f);
+            float interval = Random.Range(1f, 6f);
             GameObject enemy = enemysArray[Random.Range(0, enemysArray.Length)];
 
             yield return new WaitForSeconds(interval);

@@ -4,6 +4,8 @@ using UnityEngine;
 public class HerbInventory : MonoBehaviour
 {
     [SerializeField] private HerbTypes[] herbInventory = new HerbTypes[2];
+    [SerializeField] private GameObject tinyPlayerGameObject;
+    [SerializeField] private GameObject[] obstaclesPrefabs;
     private CraftingOrder crafting;
     private int herbCount = 0;
 
@@ -23,7 +25,7 @@ public class HerbInventory : MonoBehaviour
         herbCount = 0;
 
         int currentPotion = crafting.FindPotion(herbInventory);
-        crafting.BrewPotion(currentPotion, gameObject);
+        crafting.BrewPotion(currentPotion, gameObject, tinyPlayerGameObject, obstaclesPrefabs);
 
     }
 

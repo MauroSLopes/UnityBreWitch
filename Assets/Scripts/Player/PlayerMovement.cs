@@ -38,9 +38,11 @@ public class PlayerMovement : MonoBehaviour
         if (direction.x < 0 && isFacingRight)
         {
             Flip();
-        }
+        }  
+        
+        rb.velocity = direction * playerSpeed;
 
-        transform.Translate(direction.normalized * Time.deltaTime * playerSpeed);
+        // transform.Translate(direction.normalized * Time.deltaTime * playerSpeed);
 
         if (transform.position.x < -10 || transform.position.x > 10)
         {

@@ -17,7 +17,7 @@ public class HerbSpawner : MonoBehaviour
     public IEnumerator SpawnCoroutine()
     {
         while (true) { 
-        yield return new WaitForSeconds(Random.Range(1f, 7f));
+        yield return new WaitForSeconds(Random.Range(1f, 4f));
         Vector3 spawnLocation = new Vector3(Random.Range(-spawnRangeWidth, spawnRangeWidth), 
             Random.Range(-spawnRangeHeight, spawnRangeHeight), 0f);
         Instantiate(herbsArray[Random.Range(0, herbsArray.Length)], spawnLocation, Quaternion.identity);

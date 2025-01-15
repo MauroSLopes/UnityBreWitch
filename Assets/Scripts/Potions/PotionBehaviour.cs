@@ -1,7 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.Rendering.DebugUI;
 
 public class PotionBehaviour
 {
@@ -24,14 +22,14 @@ public class PotionBehaviour
         playerStatus.playerMoveSpeed = value;
     }
 
-    public GameObject[] GetEnemys()
+    public GameObject[] GetByTag(string tag)
     {
-        return GameObject.FindGameObjectsWithTag("Enemy");
+        return GameObject.FindGameObjectsWithTag(tag);
     }
 
     public void ChangeEnemySpeed(float value)
     {
-        var Enemys = GetEnemys();
+        var Enemys = GetByTag("Enemy");
 
         foreach(var Enemy in Enemys)
         {
@@ -41,12 +39,32 @@ public class PotionBehaviour
 
     public void KillAllEnemys()
     {
-        var Enemys = GetEnemys();
+        var Enemys = GetByTag("Enemy");
 
         foreach (var Enemy in Enemys)
         {
             GameObject.Destroy(Enemy);
         }
+    }
+
+    public void DestroyAllObstacles()
+    {
+        foreach(GameObject obstacle in GetByTag("Obstacle"))
+        {
+            GameObject.Destroy(obstacle);
+        }
+    }
+
+    public void ToggleCollider(GameObject collider)
+    {
+        collider.GetComponent<CircleCollider2D>().enabled = !collider.GetComponent<CircleCollider2D>().enabled;
+    }
+
+    public IEnumerator ToggleCollider(GameObject collider, float duration)
+    {
+        ToggleCollider(collider);
+        yield return new WaitForSeconds(duration);
+        ToggleCollider(collider);
     }
 
     public Vector2 ChangePlayerHitBox(Vector2 hitboxSize)
@@ -85,12 +103,16 @@ public class PotionBehaviour
         }
     }
 
-    public IEnumerator tinyPotionBehavior(Vector2 hitboxSize, float duration)
+    public IEnumerator tinyPotionBehavior(Vector2 hitboxSize, float duration, GameObject tinyPlayer)
     {
         Vector2 oldHitBoxSize = ChangePlayerHitBox(hitboxSize);
+        tinyPlayer.SetActive(true);
 
         yield return new WaitForSeconds(duration);
 
+        tinyPlayer.SetActive(false);
         ChangePlayerHitBox(oldHitBoxSize);
-    } 
+    }
+
+
 }

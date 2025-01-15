@@ -42,7 +42,7 @@ public class CraftingOrder : MonoBehaviour
         return -1;
     }
 
-    public void BrewPotion(int currentPotion, GameObject PlayerGameObject)
+    public void BrewPotion(int currentPotion, GameObject PlayerGameObject, GameObject tinyPlayer, GameObject[] obstacles)
     {
         if (currentPotion == -1)
         {
@@ -59,7 +59,7 @@ public class CraftingOrder : MonoBehaviour
                 break;
             case 1:
                 // Tiny player
-                StartCoroutine(potionManager.tinyPotionBehavior(new Vector2(0.6875f, 0.3786746f), 5f));
+                StartCoroutine(potionManager.tinyPotionBehavior(new Vector2(0.6875f, 0.3786746f), 5f, tinyPlayer));
                 break;
             case 2:
                 // Slippery Ground
@@ -71,6 +71,10 @@ public class CraftingOrder : MonoBehaviour
                 break;
             case 4:
                 // Spawn Obstacles
+                for (int i = 0; i < Random.Range(1, 6); i++)
+                {
+                    Instantiate(obstacles[Random.Range(0, obstacles.Length)], new Vector3(Random.Range(-10f, 10f), Random.Range(-5f, 5f)), Quaternion.identity);
+                }   
                 break;
             case 5:
                 // Shield
@@ -82,13 +86,16 @@ public class CraftingOrder : MonoBehaviour
             case 7:
                 // Enemys run from player
                 potionManager.ChangeEnemySpeed(-10f);
-                foreach(var enemy in potionManager.GetEnemys())
+                foreach(var enemy in potionManager.GetByTag("Enemy"))
                 {
                     enemy.GetComponent<BoxCollider2D>().enabled = false;
                 }
                 break;
             case 8:
                 // No Collision with obstacles
+                foreach(var obstacle in potionManager.GetByTag("Obstacle")){
+                    StartCoroutine(potionManager.ToggleCollider(obstacle, 5f));
+                }
                 break;
             case 9:
                 // Freeze Enemys in Place
@@ -109,7 +116,8 @@ public class CraftingOrder : MonoBehaviour
                 // 
                 break;
             case 14:
-                // 
+                // Destroy All Obstacles
+                potionManager.DestroyAllObstacles();
                 break;
             default:
                 Debug.Log("Not Found");
